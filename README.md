@@ -58,14 +58,18 @@ Visit: http://127.0.0.1:5000/ in your browser.
 Removing punctuation and stopwords
 
 -Lowercasing
+
 -Tokenization
+
 -Lemmatization
 
 ### 6. 🧠 Machine Learning Model
 Model Type: Artificial Neural Network
 
 -Framework: Keras
+
 -Trained on labeled fake/real news dataset
+
 -Accuracy: 91.02%
 
 ### 7. 📁 Folder Structure
