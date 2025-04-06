@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Fake News Detector</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --real-primary: #228B22;       /* Forest Green */
+            --real-light: #E6F4EA;         /* Light Green */
+            --real-dark: #145214;          /* Dark Green */
+            
+            --fake-primary: #D2042D;       /* Alert Red */
+            --fake-light: #FFE6EB;         /* Light Red */
+            --fake-dark: #8B0000;         /* Dark Red */
+            
+            --neutral-light: #f8f9fa;
+            --neutral-dark: #212529;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e2e6f0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--real-primary), var(--fake-primary));
+            animation: progress 2s ease-in-out infinite;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--neutral-dark);
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--real-primary);
+            border-radius: 3px;
+        }
+        
+        .typing-animation {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--real-primary);
+            animation: typing 3s steps(40) 1s 1 normal both, blink 0.75s step-end infinite;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            resize: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        textarea:hover {
+            border-color: var(--real-primary);
+            box-shadow: 0 5px 15px rgba(34, 139, 34, 0.1);
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: var(--real-primary);
+            box-shadow: 0 5px 15px rgba(34, 139, 34, 0.2);
+        }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: linear-gradient(45deg, var(--real-primary), #1DA1F2);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(34, 139, 34, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        #result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .real {
+            background-color: var(--real-light);
+            color: var(--real-dark);
+            border-left: 5px solid var(--real-primary);
+            animation: pulse-green 2s infinite;
+        }
+        
+        .fake {
+            background-color: var(--fake-light);
+            color: var(--fake-dark);
+            border-left: 5px solid var(--fake-primary);
+            animation: shake 0.5s;
+        }
+        
+        .icon {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--real-primary) }
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; right: 0; left: auto; }
+        }
+        
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(34, 139, 34, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(34, 139, 34, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 139, 34, 0); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .loading {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="typing-animation">Fake News Detector <i class="fas fa-search icon"></i></h2>
+        <form id="newsForm">
+            <div class="form-group">
+                <textarea id="newsText" placeholder="Paste news article here to verify authenticity..." required></textarea>
+            </div>
+            <button type="submit">
+                <i class="fas fa-check-circle icon"></i> Analyze Content
+            </button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById("newsForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const resultDiv = document.getElementById("result");
+            resultDiv.classList.remove("show", "real", "fake");
+            
+            let text = document.getElementById("newsText").value.trim();
+            
+            if (!text) {
+                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle icon"></i> Please enter text to analyze';
+                resultDiv.classList.add("show", "fake");
+                return;
+            }
+            
+            // Show loading state
+            resultDiv.innerHTML = '<i class="fas fa-spinner loading icon"></i> Analyzing content...';
+            resultDiv.classList.add("show");
+            
+            // Simulate API call (replace with actual fetch)
+            setTimeout(() => {
+                // This would be your actual fetch call in production:
+                // fetch("/predict", { ... })
+                
+                // Mock response - replace with real API call
+                const mockResponses = [
+                    { prediction: "Real News", confidence: 0.87 },
+                    { prediction: "Fake News", confidence: 0.92 }
+                ];
+                const response = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+                
+                displayResult(response);
+            }, 1500);
+        });
+        
+        function displayResult(data) {
+            const resultDiv = document.getElementById("result");
+            const isFake = data.prediction === "Fake News";
+            
+            resultDiv.innerHTML = `
+                <i class="fas ${isFake ? 'fa-times-circle' : 'fa-check-circle'} icon"></i>
+                <strong>${data.prediction}</strong>
+                <div style="margin-top:8px;font-size:14px;font-weight:normal">
+                    Confidence: ${(data.confidence * 100).toFixed(0)}%
+                </div>
+                <div style="margin-top:12px;font-size:14px;">
+                    ${isFake ? 
+                      '<i class="fas fa-lightbulb"></i> Tip: Verify with trusted sources before sharing' : 
+                      '<i class="fas fa-thumbs-up"></i> This content appears trustworthy'}
+                </div>
+            `;
+            
+            resultDiv.classList.add("show", isFake ? "fake" : "real");
+            
+            // Add confetti for real news
+            if (!isFake) {
+                createConfetti();
+            }
+        }
+        
+        function createConfetti() {
+            const container = document.querySelector('.container');
+            const colors = ['#228B22', '#1DA1F2', '#4CC9F0', '#3A86FF'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.innerHTML = ['<i class="fas fa-check"></i>', '<i class="fas fa-star"></i>', '<i class="fas fa-circle"></i>'][Math.floor(Math.random() * 3)];
+                confetti.style.position = 'absolute';
+                confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.fontSize = `${Math.random() * 12 + 8}px`;
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = '-30px';
+                confetti.style.opacity = '0';
+                confetti.style.transform = `translateY(0) rotate(0deg) scale(${Math.random() + 0.5})`;
+                confetti.style.transition = `all ${Math.random() * 3 + 2}s ease-out`;
+                confetti.style.zIndex = '1000';
+                confetti.style.textShadow = '0 2px 3px rgba(0,0,0,0.1)';
+                
+                container.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.style.opacity = '1';
+                    confetti.style.transform = `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg) scale(${Math.random() + 0.5})`;
+                }, 10);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
