@@ -72,6 +72,9 @@ Model Type: Artificial Neural Network
 
 -Accuracy: 91.02%
 
+- Fake News: Trump supporters and the so-called president s favorite network are lashing out at special counsel Robert Mueller and the FBI.
+- Real News:- BRUSSELS (Reuters) - NATO allies on Tuesday welcomed President Donald Trump s decision to commit more forces to Afghanistan, as part of a new U.S. strategy he said would require more troops and funding from America s partners. 
+
 ### 7. 📁 Folder Structure
 ```bash
 ├── model/             # Saved trained model
