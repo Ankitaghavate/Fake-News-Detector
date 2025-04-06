@@ -24,6 +24,8 @@ This is a web-based Fake News Detection system built using **Natural Language Pr
 - **Render** – Deployment
 
 ---
+# 🌐 Live Demo
+Deployed on Render:- 
 
 ## 🛠️ How to Run This Project Locally
 
@@ -78,8 +80,6 @@ Accuracy: 91.02%
 ├── render.yaml        # Deployment config
 ├── requirements.txt   # Python dependencies
 └── .gitignore
-🌐 Live Demo
-Deployed on Render
 
 ```
 
