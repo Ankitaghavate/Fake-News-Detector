@@ -11,14 +11,15 @@
             --real-primary: #228B22;       /* Forest Green */
             --real-light: #E6F4EA;         /* Light Green */
             --real-dark: #145214;          /* Dark Green */
-            
             --fake-primary: #D2042D;       /* Alert Red */
             --fake-light: #FFE6EB;         /* Light Red */
-            --fake-dark: #8B0000;         /* Dark Red */
-            
+            --fake-dark: #8B0000;          /* Dark Red */
             --neutral-light: #f8f9fa;
             --neutral-dark: #212529;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --accent-blue: #1DA1F2;        /* Twitter blue */
+            --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
         
         * {
@@ -35,104 +36,85 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            line-height: 1.6;
         }
         
         .container {
             background: white;
             border-radius: 15px;
-            box-shadow: var(--shadow);
-            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            padding: 30px;
             width: 100%;
             max-width: 800px;
-            animation: fadeIn 0.8s ease-out;
-            position: relative;
-            overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
         }
         
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--real-primary), var(--fake-primary));
-            animation: progress 2s ease-in-out infinite;
-        }
-        
-        h2 {
+        h1 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             color: var(--neutral-dark);
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             position: relative;
             display: inline-block;
+            width: 100%;
         }
         
-        h2::after {
+        h1::after {
             content: '';
             position: absolute;
             bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background: var(--real-primary);
-            border-radius: 3px;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--real-primary), var(--accent-blue));
+            border-radius: 2px;
         }
         
-        .typing-animation {
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: 3px solid var(--real-primary);
-            animation: typing 3s steps(40) 1s 1 normal both, blink 0.75s step-end infinite;
-        }
-        
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .form-group {
-            position: relative;
+        .input-group {
+            margin-bottom: 25px;
         }
         
         textarea {
             width: 100%;
-            height: 200px;
             padding: 15px;
-            font-size: 16px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
-            resize: none;
+            margin-bottom: 5px;
+            resize: vertical;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        textarea:hover {
-            border-color: var(--real-primary);
-            box-shadow: 0 5px 15px rgba(34, 139, 34, 0.1);
+            min-height: 200px;
+            box-shadow: var(--shadow-sm);
         }
         
         textarea:focus {
             outline: none;
-            border-color: var(--real-primary);
-            box-shadow: 0 5px 15px rgba(34, 139, 34, 0.2);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.2);
+        }
+        
+        .char-count {
+            text-align: right;
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: -15px;
+            margin-bottom: 15px;
         }
         
         button {
-            padding: 15px 30px;
-            font-size: 18px;
-            background: linear-gradient(45deg, var(--real-primary), #1DA1F2);
+            background: linear-gradient(90deg, var(--real-primary), var(--accent-blue));
             color: white;
             border: none;
+            padding: 15px 30px;
             border-radius: 50px;
             cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
+            width: 100%;
+            box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -140,82 +122,77 @@
         }
         
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(34, 139, 34, 0.4);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
         
         button:active {
-            transform: translateY(1px);
-        }
-        
-        #result {
-            margin-top: 25px;
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-        
-        #result.show {
-            opacity: 1;
             transform: translateY(0);
         }
         
-        .real {
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .result {
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .result.show {
+            opacity: 1;
+            height: auto;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .result.real {
             background-color: var(--real-light);
             color: var(--real-dark);
             border-left: 5px solid var(--real-primary);
-            animation: pulse-green 2s infinite;
+            animation: fadeIn 0.5s ease-out;
         }
         
-        .fake {
+        .result.fake {
             background-color: var(--fake-light);
             color: var(--fake-dark);
             border-left: 5px solid var(--fake-primary);
-            animation: shake 0.5s;
+            animation: fadeIn 0.5s ease-out;
         }
         
-        .icon {
-            font-size: 1.2em;
-            margin-right: 8px;
+        .confidence {
+            font-size: 14px;
+            font-weight: normal;
+            margin-top: 8px;
+            display: block;
         }
         
-        /* Animations */
+        .tip {
+            font-size: 14px;
+            margin-top: 10px;
+            display: block;
+            font-weight: normal;
+        }
+        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-        
-        @keyframes blink {
-            from, to { border-color: transparent }
-            50% { border-color: var(--real-primary) }
-        }
-        
-        @keyframes progress {
-            0% { width: 0%; }
-            50% { width: 100%; }
-            100% { width: 0%; right: 0; left: auto; }
-        }
-        
-        @keyframes pulse-green {
-            0% { box-shadow: 0 0 0 0 rgba(34, 139, 34, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(34, 139, 34, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 139, 34, 0); }
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .loading {
@@ -227,112 +204,111 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            textarea {
+                min-height: 150px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2 class="typing-animation">Fake News Detector <i class="fas fa-search icon"></i></h2>
-        <form id="newsForm">
-            <div class="form-group">
-                <textarea id="newsText" placeholder="Paste news article here to verify authenticity..." required></textarea>
-            </div>
-            <button type="submit">
-                <i class="fas fa-check-circle icon"></i> Analyze Content
-            </button>
-        </form>
-        <div id="result"></div>
+        <h1>Fake News Detector <i class="fas fa-search"></i></h1>
+        <div class="input-group">
+            <textarea id="newsText" placeholder="Paste your news article here to check its authenticity..." rows="8"></textarea>
+            <div class="char-count"><span id="charCount">0</span>/5000 characters</div>
+        </div>
+        <button id="detectButton">
+            <i class="fas fa-check-circle"></i> Detect Authenticity
+        </button>
+        <div id="result" class="result"></div>
     </div>
 
     <script>
-        document.getElementById("newsForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+        const newsText = document.getElementById('newsText');
+        const detectButton = document.getElementById('detectButton');
+        const resultDiv = document.getElementById('result');
+        const charCount = document.getElementById('charCount');
+
+        // Character count update
+        newsText.addEventListener('input', () => {
+            const count = newsText.value.length;
+            charCount.textContent = count;
             
-            const resultDiv = document.getElementById("result");
-            resultDiv.classList.remove("show", "real", "fake");
-            
-            let text = document.getElementById("newsText").value.trim();
-            
-            if (!text) {
-                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle icon"></i> Please enter text to analyze';
-                resultDiv.classList.add("show", "fake");
+            if (count > 5000) {
+                charCount.style.color = 'var(--fake-primary)';
+            } else {
+                charCount.style.color = 'inherit';
+            }
+        });
+
+        detectButton.addEventListener('click', async () => {
+            const text = newsText.value.trim();
+
+            if (text === '') {
+                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter some text to analyze';
+                resultDiv.className = 'result show fake';
                 return;
             }
+
+            if (text.length > 5000) {
+                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Text exceeds 5000 character limit';
+                resultDiv.className = 'result show fake';
+                return;
+            }
+
+            // Disable button during processing
+            detectButton.disabled = true;
+            detectButton.innerHTML = '<i class="fas fa-spinner loading"></i> Analyzing...';
+
+            // Clear previous results
+            resultDiv.className = 'result';
             
-            // Show loading state
-            resultDiv.innerHTML = '<i class="fas fa-spinner loading icon"></i> Analyzing content...';
-            resultDiv.classList.add("show");
-            
-            // Simulate API call (replace with actual fetch)
-            setTimeout(() => {
-                // This would be your actual fetch call in production:
-                // fetch("/predict", { ... })
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `text=${encodeURIComponent(text)}`,
+                });
+
+                const data = await response.json();
                 
-                // Mock response - replace with real API call
-                const mockResponses = [
-                    { prediction: "Real News", confidence: 0.87 },
-                    { prediction: "Fake News", confidence: 0.92 }
-                ];
-                const response = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+                const isFake = data.prediction.toLowerCase().includes('fake');
+                const confidence = data.confidence ? `${Math.round(data.confidence * 100)}%` : 'high';
                 
-                displayResult(response);
-            }, 1500);
+                resultDiv.innerHTML = `
+                    <i class="fas ${isFake ? 'fa-times-circle' : 'fa-check-circle'}"></i>
+                    ${data.prediction}
+                    <span class="confidence">Confidence: ${confidence}</span>
+                    <span class="tip">
+                        ${isFake 
+                            ? '<i class="fas fa-lightbulb"></i> Tip: Verify with trusted sources before sharing' 
+                            : '<i class="fas fa-thumbs-up"></i> This content appears trustworthy'}
+                    </span>
+                `;
+                resultDiv.className = `result show ${isFake ? 'fake' : 'real'}`;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error analyzing text. Please try again.';
+                resultDiv.className = 'result show fake';
+            } finally {
+                detectButton.disabled = false;
+                detectButton.innerHTML = '<i class="fas fa-check-circle"></i> Detect Authenticity';
+            }
         });
-        
-        function displayResult(data) {
-            const resultDiv = document.getElementById("result");
-            const isFake = data.prediction === "Fake News";
-            
-            resultDiv.innerHTML = `
-                <i class="fas ${isFake ? 'fa-times-circle' : 'fa-check-circle'} icon"></i>
-                <strong>${data.prediction}</strong>
-                <div style="margin-top:8px;font-size:14px;font-weight:normal">
-                    Confidence: ${(data.confidence * 100).toFixed(0)}%
-                </div>
-                <div style="margin-top:12px;font-size:14px;">
-                    ${isFake ? 
-                      '<i class="fas fa-lightbulb"></i> Tip: Verify with trusted sources before sharing' : 
-                      '<i class="fas fa-thumbs-up"></i> This content appears trustworthy'}
-                </div>
-            `;
-            
-            resultDiv.classList.add("show", isFake ? "fake" : "real");
-            
-            // Add confetti for real news
-            if (!isFake) {
-                createConfetti();
-            }
-        }
-        
-        function createConfetti() {
-            const container = document.querySelector('.container');
-            const colors = ['#228B22', '#1DA1F2', '#4CC9F0', '#3A86FF'];
-            
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.innerHTML = ['<i class="fas fa-check"></i>', '<i class="fas fa-star"></i>', '<i class="fas fa-circle"></i>'][Math.floor(Math.random() * 3)];
-                confetti.style.position = 'absolute';
-                confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.fontSize = `${Math.random() * 12 + 8}px`;
-                confetti.style.left = `${Math.random() * 100}%`;
-                confetti.style.top = '-30px';
-                confetti.style.opacity = '0';
-                confetti.style.transform = `translateY(0) rotate(0deg) scale(${Math.random() + 0.5})`;
-                confetti.style.transition = `all ${Math.random() * 3 + 2}s ease-out`;
-                confetti.style.zIndex = '1000';
-                confetti.style.textShadow = '0 2px 3px rgba(0,0,0,0.1)';
-                
-                container.appendChild(confetti);
-                
-                setTimeout(() => {
-                    confetti.style.opacity = '1';
-                    confetti.style.transform = `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg) scale(${Math.random() + 0.5})`;
-                }, 10);
-                
-                setTimeout(() => {
-                    confetti.remove();
-                }, 3000);
-            }
-        }
     </script>
 </body>
 </html>
