@@ -31,27 +31,34 @@ This is a web-based Fake News Detection system built using **Natural Language Pr
 ```bash
 git clone https://github.com/your-username/Fake-News-Detector.git
 cd Fake-News-Detector
+```
+
 
 2. Create a Virtual Environment (optional but recommended)
-bash
+```bash
 Copy
 Edit
 python -m venv venv
 source venv/bin/activate  # For Linux/macOS
 venv\Scripts\activate     # For Windows
+```
+
 3. Install Dependencies
-bash
+```bash
 Copy
 Edit
 pip install -r requirements.txt
+```
+
 4. Run the Application
-bash
+```bash
 Copy
 Edit
 python app.py
 Visit: http://127.0.0.1:5000/ in your browser.
+```
 
-🧹 Text Preprocessing (NLP)
+5.🧹 Text Preprocessing (NLP)
 Removing punctuation and stopwords
 
 Lowercasing
@@ -60,17 +67,17 @@ Tokenization
 
 Lemmatization
 
-🧠 Machine Learning Model
+6. 🧠 Machine Learning Model
 Model Type: Artificial Neural Network
 
 Framework: Keras
 
 Trained on labeled fake/real news dataset
 
-Accuracy: (mention if available)
+Accuracy: 91.02%
 
-📁 Folder Structure
-bash
+7. 📁 Folder Structure
+```bash
 Copy
 Edit
 ├── model/             # Saved trained model
@@ -82,14 +89,6 @@ Edit
 🌐 Live Demo
 Deployed on Render
 (Insert your Render link here once deployed)
+```
 
-🙌 Author
-Ankita Ghavate
 Feel free to connect or contribute!
-
-yaml
-Copy
-Edit
-
----
-Let me know if you want to add screenshots, demo video links, or badges (build status, license, etc.). Want me to create this `README.md` file directly for you?
