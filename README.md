@@ -36,8 +36,6 @@ cd Fake-News-Detector
 
 2. Create a Virtual Environment (optional but recommended)
 ```bash
-Copy
-Edit
 python -m venv venv
 source venv/bin/activate  # For Linux/macOS
 venv\Scripts\activate     # For Windows
@@ -45,15 +43,11 @@ venv\Scripts\activate     # For Windows
 
 3. Install Dependencies
 ```bash
-Copy
-Edit
 pip install -r requirements.txt
 ```
 
 4. Run the Application
 ```bash
-Copy
-Edit
 python app.py
 Visit: http://127.0.0.1:5000/ in your browser.
 ```
@@ -78,8 +72,6 @@ Accuracy: 91.02%
 
 7. 📁 Folder Structure
 ```bash
-Copy
-Edit
 ├── model/             # Saved trained model
 ├── templates/         # HTML frontend
 ├── app.py             # Flask backend
@@ -88,7 +80,7 @@ Edit
 └── .gitignore
 🌐 Live Demo
 Deployed on Render
-(Insert your Render link here once deployed)
+
 ```
 
 Feel free to connect or contribute!
