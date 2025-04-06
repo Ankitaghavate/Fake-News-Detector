@@ -36,14 +36,14 @@ cd Fake-News-Detector
 ```
 
 
-2. Create a Virtual Environment (optional but recommended)
+### 2. Create a Virtual Environment (optional but recommended)
 ```bash
 python -m venv venv
 source venv/bin/activate  # For Linux/macOS
 venv\Scripts\activate     # For Windows
 ```
 
-3. Install Dependencies
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
@@ -54,25 +54,21 @@ python app.py
 Visit: http://127.0.0.1:5000/ in your browser.
 ```
 
-5.🧹 Text Preprocessing (NLP)
+### 5.🧹 Text Preprocessing (NLP)
 Removing punctuation and stopwords
 
-Lowercasing
+-Lowercasing
+-Tokenization
+-Lemmatization
 
-Tokenization
-
-Lemmatization
-
-6. 🧠 Machine Learning Model
+### 6. 🧠 Machine Learning Model
 Model Type: Artificial Neural Network
 
-Framework: Keras
+-Framework: Keras
+-Trained on labeled fake/real news dataset
+-Accuracy: 91.02%
 
-Trained on labeled fake/real news dataset
-
-Accuracy: 91.02%
-
-7. 📁 Folder Structure
+### 7. 📁 Folder Structure
 ```bash
 ├── model/             # Saved trained model
 ├── templates/         # HTML frontend
