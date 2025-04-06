@@ -6,21 +6,31 @@ import string
 import nltk
 from nltk.corpus import stopwords
 
-# Download required NLTK resources
-nltk.download('stopwords')
-nltk.download('punkt')
+# Safe download of NLTK data
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
 
-# Define Flask app
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+
+# Initialize Flask app
 app = Flask(__name__)
 
-# ---------- Preprocessing Function ----------
+# ---------- Text Preprocessing Function ----------
 def preprocessing(text):
-    text = text.lower()
-    text = re.sub(r'\d+', '', text)
-    text = text.translate(str.maketrans('', '', string.punctuation))
-    words = text.split()
-    words = [word for word in words if word not in stopwords.words('english')]
-    return " ".join(words)
+    text = text.lower()  # Lowercase
+    text = re.sub(r'\d+', '', text)  # Remove numbers
+    text = text.translate(str.maketrans('', '', string.punctuation))  # Remove punctuation
+    words = nltk.word_tokenize(text)  # Tokenize
+
+    stop_words = set(stopwords.words('english'))  # Load stopwords
+    filtered_words = [word for word in words if word not in stop_words]  # Remove stopwords
+
+    return " ".join(filtered_words)
 
 # ---------- Load Model and Vectorizer ----------
 model_path = os.path.join(os.getcwd(), "model", "fake_news_detection.pkl")
@@ -37,7 +47,7 @@ tfidf_vectorizer = joblib.load(vectorizer_path)
 # ---------- Routes ----------
 @app.route('/')
 def home():
-    return render_template("index.html")  # Make sure templates/index.html exists
+    return render_template("index.html")  # Ensure templates/index.html exists
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -46,10 +56,10 @@ def predict():
     if not text:
         return jsonify({"error": "No text provided"}), 400
 
-    # Apply preprocessing
+    # Preprocess input
     cleaned_text = preprocessing(text)
 
-    # Transform and predict
+    # Transform & Predict
     text_tfidf = tfidf_vectorizer.transform([cleaned_text])
     prediction = model.predict(text_tfidf)[0]
     result = "Real News" if prediction == 1 else "Fake News"
