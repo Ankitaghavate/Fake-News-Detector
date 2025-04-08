@@ -24,8 +24,6 @@ This is a web-based Fake News Detection system built using **Natural Language Pr
 - **Render** – Deployment
 
 ---
-# 🌐 Live Demo
-Deployed on Render:- 
 
 ## 🛠️ How to Run This Project Locally
 
